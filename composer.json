@@ -1,0 +1,44 @@
+{
+  "name": "abacaphiliac/php-library-skeleton",
+  "description": "An opinionated PHP library skeleton, with PHP-syntax and CodeSniffer-PSR2 linters, PHPUnit, and Travis CI.",
+  "type": "library",
+  "keywords": [
+    
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Timothy Younger",
+      "email": "abacaphiliac@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "require-dev": {
+    "composer/composer": "^1.2",
+    "jakub-onderka/php-parallel-lint": "^0.9",
+    "mikey179/vfsStream": "^1.6",
+    "phing/phing": "^2.14",
+    "phpunit/phpunit": "^5.4|^4.8",
+    "squizlabs/php_codesniffer": "^2.2",
+    "symfony/yaml": "^3.1",
+    "symfony/serializer": "^3.1",
+    "theseer/directoryscanner": "^1.3",
+    "johnkary/phpunit-speedtrap": "^1.0",
+    "symfony/property-access": "^3.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpLibrarySkeleton\\": "src/PhpLibrarySkeleton"
+    }
+  },
+  "minimum-stability": "stable",
+  "scripts": {
+    "post-create-project-cmd": [
+      "PhpLibrarySkeleton\\UpdateProjectFiles::postCreateProjectCmd",
+      "composer validate",
+      "composer update"
+    ]
+  }
+}

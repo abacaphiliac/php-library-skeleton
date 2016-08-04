@@ -1,0 +1,58 @@
+<?php
+
+namespace PhpLibrarySkeleton;
+
+use Composer\IO\IOInterface;
+use PhpLibrarySkeleton\Composer\IO\IOHelper;
+use PhpLibrarySkeleton\File\FileHelper;
+use PhpLibrarySkeleton\File\JsonFile;
+use PhpLibrarySkeleton\File\YmlFile;
+
+class UpdateProjectFilesFactory
+{
+    /**
+     * @param \SplFileInfo $root
+     * @param IOInterface $io
+     * @return UpdateProjectFiles
+     * @throws \InvalidArgumentException
+     */
+    public static function createCommand(\SplFileInfo $root, IOInterface $io)
+    {
+        // Provide root to the file helper so that we can do recursive find-and-replace later.
+        $fileHelper = new FileHelper($root);
+        
+        // Wrap IO so that questions are not asked multiple times (maintains state).
+        $ioHelper = new IOHelper($io);
+        
+        // Get a Composer config handle and build the update objects.
+        $composerConfig = new JsonFile(new \SplFileInfo($root->getPathname() . '/composer.json'));
+        $composerUpdates = array(
+            new UpdateComposerConfig\ClassNamespace($composerConfig, $ioHelper),
+            new UpdateComposerConfig\MinimumPhpVersion($composerConfig, $ioHelper),
+            new UpdateComposerConfig\MinimumStability($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageAuthor($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageDescription($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageKeywords($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageLicense($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageName($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageScripts($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageType($composerConfig, $ioHelper),
+        );
+
+        // Get a Travis config handle and build the update objects.
+        $travisConfig = new YmlFile(new \SplFileInfo($root->getPathname() . '/.travis.yml'));
+        $travisUpdates = array(
+            new UpdateTravisConfig\MinimumPhpVersion($travisConfig, $ioHelper),
+        );
+
+        return new UpdateProjectFiles(
+            $fileHelper,
+            $ioHelper,
+            $root,
+            $composerConfig,
+            $composerUpdates,
+            $travisConfig,
+            $travisUpdates
+        );
+    }
+}
