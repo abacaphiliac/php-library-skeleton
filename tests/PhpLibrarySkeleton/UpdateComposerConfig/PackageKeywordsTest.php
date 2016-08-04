@@ -6,6 +6,10 @@ use PhpLibrarySkeleton\Composer\IO\IOHelper;
 use PhpLibrarySkeleton\File\FileInterface;
 use PhpLibrarySkeleton\UpdateComposerConfig\PackageKeywords;
 
+/**
+ * @covers \PhpLibrarySkeleton\UpdateComposerConfig\PackageKeywords
+ * @covers \PhpLibrarySkeleton\Composer\IO\AbstractFileIO
+ */
 class PackageKeywordsTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|FileInterface */

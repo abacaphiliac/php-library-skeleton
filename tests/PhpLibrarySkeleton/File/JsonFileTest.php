@@ -3,11 +3,19 @@
 namespace PhpLibrarySkeletonTest\File;
 
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use PhpLibrarySkeleton\File\JsonFile;
 
+/**
+ * @covers \PhpLibrarySkeleton\File\JsonFile
+ * @covers \PhpLibrarySkeleton\File\AbstractFile
+ */
 class JsonFileTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var vfsStreamDirectory */
+    private $root;
+    
     /** @var vfsStreamFile */
     private $file;
     
@@ -17,11 +25,11 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        
-        $dir = vfsStream::setup('vfsTest');
+
+        $this->root = vfsStream::setup('vfsTest');
 
         $this->file = vfsStream::newFile('file.json');
-        $dir->addChild($this->file);
+        $this->root->addChild($this->file);
 
         $this->sut = new JsonFile(new \SplFileInfo($this->file->url()));
     }
@@ -61,5 +69,29 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
         $this->sut->writeFile();
         
         self::assertStringEqualsFile($this->file->url(), '{"Foo":"Bar"}');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFileNotFound()
+    {
+        new JsonFile(new \SplFileInfo($this->root->url() . '/FooBar.json'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFileNotReadable()
+    {
+        $file = vfsStream::newFile('FooBar.json', 0);
+        $this->root->addChild($file);
+        
+        new JsonFile(new \SplFileInfo($file->url()));
+    }
+    
+    public function testGetFile()
+    {
+        self::assertInstanceOf('\SplFileInfo', $this->sut->getFile());
     }
 }

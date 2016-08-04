@@ -31,10 +31,4 @@ interface FileHelperInterface
      * @return int
      */
     public static function findAndReplaceInFile($filename, $search, $replace);
-
-    /**
-     * @param string $relativePath
-     * @return \SplFileInfo
-     */
-    public function getFilename($relativePath);
 }

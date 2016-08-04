@@ -6,6 +6,10 @@ use PhpLibrarySkeleton\Composer\IO\IOHelper;
 use PhpLibrarySkeleton\File\FileInterface;
 use PhpLibrarySkeleton\UpdateComposerConfig\PackageDescription;
 
+/**
+ * @covers \PhpLibrarySkeleton\UpdateComposerConfig\PackageDescription
+ * @covers \PhpLibrarySkeleton\Composer\IO\AbstractFileIO
+ */
 class PackageDescriptionTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|FileInterface */

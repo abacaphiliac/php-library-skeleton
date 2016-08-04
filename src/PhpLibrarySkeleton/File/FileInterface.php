@@ -2,18 +2,8 @@
 
 namespace PhpLibrarySkeleton\File;
 
-interface FileInterface
+interface FileInterface extends ReadOnlyFileInterface
 {
-    /**
-     * @return \SplFileInfo
-     */
-    public function getFile();
-
-    /**
-     * @return mixed[]
-     */
-    public function getContents();
-
     /**
      * @param mixed[] $contents
      * @return void

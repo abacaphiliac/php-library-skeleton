@@ -15,10 +15,10 @@ class FileHelper implements FileHelperInterface
      * @var mixed[]
      */
     private static $defaultExcludes = array(
-        './.idea/*',
-        './.git/*',
-        './vendor/*',
-        './composer.lock',
+        '*/.idea/*',
+        '*/.git/*',
+        '*/vendor/*',
+        '*/composer.lock',
     );
 
     /**
@@ -37,9 +37,7 @@ class FileHelper implements FileHelperInterface
      */
     public function getFiles(array $includes = array(), array $excludes = array())
     {
-        if (!$excludes) {
-            $excludes = self::$defaultExcludes;
-        }
+        $excludes = array_merge(self::$defaultExcludes, $excludes);
         
         $scanner = new DirectoryScanner();
         $scanner->setIncludes($includes);
@@ -58,7 +56,7 @@ class FileHelper implements FileHelperInterface
     public function walkFiles($callable)
     {
         if (!is_callable($callable)) {
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException('First argument must be callable.');
         }
         
         $files = $this->getFiles();
@@ -90,25 +88,5 @@ class FileHelper implements FileHelperInterface
         $subject = file_get_contents($filename);
         $replaced = str_replace($search, $replace, $subject);
         return file_put_contents($filename, $replaced);
-    }
-
-    /**
-     * @param string $relativePath
-     * @return \SplFileInfo
-     * @throws \UnexpectedValueException
-     */
-    public function getFilename($relativePath)
-    {
-        $files = FileHelper::getFiles(array($relativePath));
-        if (!$files) {
-            throw new \UnexpectedValueException();
-        }
-
-        $file = reset($files);
-        if ($file instanceof \SplFileInfo) {
-            return $file;
-        }
-
-        throw new \UnexpectedValueException();
     }
 }

@@ -5,6 +5,9 @@ namespace PhpLibrarySkeletonTest\Composer\IO;
 use Composer\IO\IOInterface;
 use PhpLibrarySkeleton\Composer\IO\IOHelper;
 
+/**
+ * @covers \PhpLibrarySkeleton\Composer\IO\IOHelper
+ */
 class IOHelperTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|IOInterface */

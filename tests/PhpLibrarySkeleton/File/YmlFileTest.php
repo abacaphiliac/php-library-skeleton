@@ -3,11 +3,19 @@
 namespace PhpLibrarySkeletonTest\File;
 
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use PhpLibrarySkeleton\File\YmlFile;
 
+/**
+ * @covers \PhpLibrarySkeleton\File\YmlFile
+ * @covers \PhpLibrarySkeleton\File\AbstractFile
+ */
 class YmlFileTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var vfsStreamDirectory */
+    private $root;
+
     /** @var vfsStreamFile */
     private $file;
     
@@ -17,11 +25,11 @@ class YmlFileTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        
-        $dir = vfsStream::setup('vfsTest');
 
-        $this->file = vfsStream::newFile('file.yml');
-        $dir->addChild($this->file);
+        $this->root = vfsStream::setup('vfsTest');
+
+        $this->file = vfsStream::newFile('file.json');
+        $this->root->addChild($this->file);
 
         $this->sut = new YmlFile(new \SplFileInfo($this->file->url()));
     }
@@ -61,5 +69,29 @@ class YmlFileTest extends \PHPUnit_Framework_TestCase
         $this->sut->writeFile();
         
         self::assertStringEqualsFile($this->file->url(), "Foo: Bar\n");
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFileNotFound()
+    {
+        new YmlFile(new \SplFileInfo($this->root->url() . '/FooBar.yml'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFileNotReadable()
+    {
+        $file = vfsStream::newFile('FooBar.ynl', 0);
+        $this->root->addChild($file);
+
+        new YmlFile(new \SplFileInfo($file->url()));
+    }
+
+    public function testGetFile()
+    {
+        self::assertInstanceOf('\SplFileInfo', $this->sut->getFile());
     }
 }
