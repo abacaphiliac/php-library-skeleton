@@ -6,6 +6,9 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PhpLibrarySkeleton\File\FileHelper;
 
+/**
+ * @covers \PhpLibrarySkeleton\File\FileHelper
+ */
 class FileHelperTest extends \PHPUnit_Framework_TestCase
 {
     /** @var vfsStreamDirectory */
@@ -101,5 +104,54 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
         $this->sut->findAndReplaceInFiles('FooBar', 'FizzBuzz');
         
         self::assertEquals('Fizz FizzBuzz Buzz', file_get_contents($projectFile->url()));
+    }
+    
+    public function testRemoveSourceDirectory()
+    {
+        $dir = vfsStream::newDirectory('src');
+        $this->root->addChild($dir);
+        
+        $file = vfsStream::newFile('FooBar.php');
+        $dir->addChild($file);
+        
+        self::assertTrue(is_dir($this->root->url()));
+        self::assertTrue(is_dir($dir->url()));
+        self::assertFileExists($file->url());
+        
+        FileHelper::removeDirectory($dir->url());
+        
+        self::assertFileNotExists($file->url());
+        self::assertFalse(is_dir($dir->url()));
+        self::assertTrue(is_dir($this->root->url()));
+    }
+    
+    public function testRemoveTestDirectory()
+    {
+        $dir = vfsStream::newDirectory('tests');
+        $this->root->addChild($dir);
+        
+        $file = vfsStream::newFile('FooBarTest.php');
+        $dir->addChild($file);
+        
+        self::assertTrue(is_dir($this->root->url()));
+        self::assertTrue(is_dir($dir->url()));
+        self::assertFileExists($file->url());
+        
+        FileHelper::removeDirectory($dir->url());
+        
+        self::assertFileNotExists($file->url());
+        self::assertFalse(is_dir($dir->url()));
+        self::assertTrue(is_dir($this->root->url()));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testNotRemovesDirectory()
+    {
+        $dir = vfsStream::newDirectory('FooBar');
+        $this->root->addChild($dir);
+        
+        FileHelper::removeDirectory($dir->url());
     }
 }

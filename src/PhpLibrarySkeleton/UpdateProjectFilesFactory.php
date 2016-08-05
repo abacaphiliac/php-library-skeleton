@@ -9,7 +9,9 @@ use PhpLibrarySkeleton\File\JsonFile;
 use PhpLibrarySkeleton\File\YmlFile;
 use PhpLibrarySkeleton\FindAndReplace\FindAndReplace;
 use PhpLibrarySkeleton\UpdateComposerConfig;
-use PhpLibrarySkeleton\UpdateDirectoryStructure\UpdateDirectoryStructure;
+use PhpLibrarySkeleton\UpdateDirectory\ReplaceSourceDirectory;
+use PhpLibrarySkeleton\UpdateDirectory\ReplaceTestDirectory;
+use PhpLibrarySkeleton\UpdateFile\UpdateFile;
 use PhpLibrarySkeleton\UpdateTravisConfig;
 
 class UpdateProjectFilesFactory
@@ -57,11 +59,15 @@ class UpdateProjectFilesFactory
         // Remove README Usage.
         // Remove README TODO.
 
-        return new UpdateProjectFiles(array(
-            new UpdateTravisConfig\UpdateTravisConfig($travisConfig, $travisUpdates),
-            new UpdateComposerConfig\UpdateComposerConfig($composerConfig, $composerUpdates),
+        // Build a set of invokable project updates.
+        $callables = array(
+            new UpdateFile($travisConfig, $travisUpdates),
+            new UpdateFile($composerConfig, $composerUpdates),
             new FindAndReplace($fileHelper, $ioHelper, $readOnlyComposerConfig),
-            new UpdateDirectoryStructure($ioHelper, $root),
-        ));
+            new ReplaceTestDirectory($ioHelper, $root),
+            new ReplaceSourceDirectory($ioHelper, $root),
+        );
+
+        return new UpdateProjectFiles($callables);
     }
 }

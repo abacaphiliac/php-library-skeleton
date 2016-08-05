@@ -89,4 +89,47 @@ class FileHelper implements FileHelperInterface
         $replaced = str_replace($search, $replace, $subject);
         return file_put_contents($filename, $replaced);
     }
+
+    /**
+     * @param string $directory
+     * @throws \InvalidArgumentException
+     */
+    public static function removeDirectory($directory)
+    {
+        if (stripos($directory, '/src') === false && stripos($directory, '/tests') === false) {
+            throw new \InvalidArgumentException(sprintf('Directory [%s] is not white-listed for removal.', $directory));
+        }
+        
+        /** @var \SplFileInfo[] $files */
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        
+        foreach($files as $file) {
+            if ($file->isDir()){
+                @rmdir($file->getPathname());
+            } else {
+                @unlink($file->getPathname());
+            }
+        }
+        
+        @rmdir($directory);
+    }
+
+    /**
+     * @param string $oldDirectory
+     * @param string $newDirectory
+     * @throws \RuntimeException
+     */
+    public static function replaceDirectory($oldDirectory, $newDirectory)
+    {
+        // Create new directory.
+        if (!@mkdir($newDirectory, fileperms($oldDirectory), true) && !is_dir($newDirectory)) {
+            throw new \RuntimeException(sprintf('Directory [%s] was not created.', $newDirectory));
+        }
+
+        // Remove old directory.
+        self::removeDirectory($oldDirectory);
+    }
 }

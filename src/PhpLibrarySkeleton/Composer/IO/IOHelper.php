@@ -133,6 +133,17 @@ class IOHelper
      * @return string
      * @throws \RuntimeException
      */
+    public function getClassDirectory()
+    {
+        $classNamespace = $this->getClassNamespace();
+        
+        return str_replace(array('\\', '//'), array('/', '/'), $classNamespace);
+    }
+
+    /**
+     * @return string
+     * @throws \RuntimeException
+     */
     public function getMinimumPhpVersion()
     {
         if ($this->minimumPhpVersion === null) {

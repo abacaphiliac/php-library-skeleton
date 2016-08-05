@@ -3,9 +3,6 @@
 namespace PhpLibrarySkeleton;
 
 use Composer\Script\Event;
-use PhpLibrarySkeleton\FindAndReplace\FindAndReplace;
-use PhpLibrarySkeleton\UpdateDirectoryStructure\UpdateDirectoryStructure;
-use PhpLibrarySkeleton\UpdateTravisConfig\UpdateTravisConfig;
 
 class UpdateProjectFiles
 {

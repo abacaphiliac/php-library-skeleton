@@ -1,26 +1,26 @@
 <?php
 
-namespace PhpLibrarySkeleton\UpdateComposerConfig;
+namespace PhpLibrarySkeleton\UpdateFile;
 
 use PhpLibrarySkeleton\Composer\IO\AbstractFileIO;
 use PhpLibrarySkeleton\File\FileInterface;
 
-class UpdateComposerConfig
+class UpdateFile
 {
     /** @var FileInterface */
-    private $writableConfig;
+    private $file;
 
     /** @var AbstractFileIO[] */
     private $fileCommands = array();
 
     /**
-     * UpdateComposerConfig constructor.
-     * @param FileInterface $writableConfig
+     * UpdateTravisConfig constructor.
+     * @param FileInterface $file
      * @param AbstractFileIO[] $fileCommands
      */
-    public function __construct(FileInterface $writableConfig, array $fileCommands)
+    public function __construct(FileInterface $file, array $fileCommands)
     {
-        $this->writableConfig = $writableConfig;
+        $this->file = $file;
         array_walk($fileCommands, array($this, 'addFileCommand'));
     }
 
@@ -38,12 +38,12 @@ class UpdateComposerConfig
      */
     public function __invoke()
     {
-        // Update Composer config in-memory.
-        foreach ($this->fileCommands as $composerUpdate) {
-            $composerUpdate->updateContents();
+        // Update Travis config in-memory.
+        foreach ($this->fileCommands as $travisUpdate) {
+            $travisUpdate->updateContents();
         }
 
         // Write updates to disk.
-        $this->writableConfig->writeFile();
+        $this->file->writeFile();
     }
 }
