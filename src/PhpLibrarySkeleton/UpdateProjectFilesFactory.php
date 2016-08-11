@@ -13,6 +13,7 @@ use PhpLibrarySkeleton\FindAndReplace\FindAndReplacePackageName;
 use PhpLibrarySkeleton\UpdateComposerConfig;
 use PhpLibrarySkeleton\UpdateDirectory\ReplaceSourceDirectory;
 use PhpLibrarySkeleton\UpdateDirectory\ReplaceTestDirectory;
+use PhpLibrarySkeleton\UpdateFile\RemoveFile;
 use PhpLibrarySkeleton\UpdateFile\UpdateFile;
 use PhpLibrarySkeleton\UpdateTravisConfig;
 
@@ -70,6 +71,7 @@ class UpdateProjectFilesFactory
             new FindAndReplaceAuthorEmail($fileHelper, $ioHelper, $readOnlyComposerConfig),
             new ReplaceTestDirectory($ioHelper, $root),
             new ReplaceSourceDirectory($ioHelper, $root),
+            new RemoveFile(new \SplFileInfo($root->getPathname() . '/composer.lock'))
         );
 
         return new UpdateProjectFiles($callables);
