@@ -39,16 +39,16 @@ class UpdateProjectFilesFactory
         // Get a Composer config handle and build the update objects.
         $composerConfig = new JsonFile(new \SplFileInfo($root->getPathname() . '/composer.json'));
         $composerUpdates = array(
-            new UpdateComposerConfig\ClassNamespace($composerConfig, $ioHelper),
-            new UpdateComposerConfig\MinimumPhpVersion($composerConfig, $ioHelper),
-            new UpdateComposerConfig\MinimumStability($composerConfig, $ioHelper),
-            new UpdateComposerConfig\PackageAuthor($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageName($composerConfig, $ioHelper),
             new UpdateComposerConfig\PackageDescription($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageType($composerConfig, $ioHelper),
             new UpdateComposerConfig\PackageKeywords($composerConfig, $ioHelper),
             new UpdateComposerConfig\PackageLicense($composerConfig, $ioHelper),
-            new UpdateComposerConfig\PackageName($composerConfig, $ioHelper),
+            new UpdateComposerConfig\PackageAuthor($composerConfig, $ioHelper),
+            new UpdateComposerConfig\MinimumPhpVersion($composerConfig, $ioHelper),
+            new UpdateComposerConfig\ClassNamespace($composerConfig, $ioHelper),
+            new UpdateComposerConfig\MinimumStability($composerConfig, $ioHelper),
             new UpdateComposerConfig\PackageScripts($composerConfig, $ioHelper),
-            new UpdateComposerConfig\PackageType($composerConfig, $ioHelper),
         );
 
         // Get a Travis config handle and build the update objects.
@@ -63,8 +63,8 @@ class UpdateProjectFilesFactory
 
         // Build a set of invokable project updates.
         $callables = array(
-            new UpdateFile($travisConfig, $travisUpdates),
             new UpdateFile($composerConfig, $composerUpdates),
+            new UpdateFile($travisConfig, $travisUpdates),
             new FindAndReplacePackageName($fileHelper, $ioHelper, $readOnlyComposerConfig),
             new FindAndReplaceAuthorName($fileHelper, $ioHelper, $readOnlyComposerConfig),
             new FindAndReplaceAuthorEmail($fileHelper, $ioHelper, $readOnlyComposerConfig),
