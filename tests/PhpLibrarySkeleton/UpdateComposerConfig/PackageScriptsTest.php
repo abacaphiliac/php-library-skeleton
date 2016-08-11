@@ -35,16 +35,34 @@ class PackageScriptsTest extends \PHPUnit_Framework_TestCase
         $this->sut = new PackageScripts($this->file, $this->ioHelper);
     }
 
-    public function testFilterPackageScripts()
+    public function testRemovePostCreateProjectCmdScripts()
     {
         $this->file->method('getContents')->willReturn(array(
             'scripts' => array(
                 'post-create-project-cmd' => 'Foo::bar',
+                'test' => 'vendor/bin/phpunit',
             ),
         ));
         
         $this->file->method('setContents')->with(self::callback(function(array $actual) {
             \PHPUnit_Framework_TestCase::assertArrayNotHasKey('post-create-project-cmd', $actual['scripts']);
+            
+            return true;
+        }));
+        
+        $this->sut->updateContents();
+    }
+
+    public function testFilterEmptyScripts()
+    {
+        $this->file->method('getContents')->willReturn(array(
+            'scripts' => array(
+                
+            ),
+        ));
+        
+        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+            \PHPUnit_Framework_TestCase::assertArrayNotHasKey('scripts', $actual);
             
             return true;
         }));

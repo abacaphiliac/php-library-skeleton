@@ -16,6 +16,10 @@ class PackageScripts extends AbstractFileIO
         $contents = $this->getFile()->getContents();
 
         unset($contents['scripts'][ScriptEvents::POST_CREATE_PROJECT_CMD]);
+        
+        if (!$contents['scripts']) {
+            unset($contents['scripts']);
+        }
 
         $this->getFile()->setContents($contents);
     }
