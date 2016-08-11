@@ -3,12 +3,12 @@
 namespace PhpLibrarySkeleton\FindAndReplace;
 
 use PhpLibrarySkeleton\Composer\IO\IOHelper;
-use PhpLibrarySkeleton\File\FileHelper;
+use PhpLibrarySkeleton\File\FileHelperInterface;
 use PhpLibrarySkeleton\File\ReadOnlyFileInterface;
 
-class FindAndReplace
+class FindAndReplaceAuthorEmail
 {
-    /** @var FileHelper */
+    /** @var FileHelperInterface */
     private $fileHelper;
 
     /** @var IOHelper */
@@ -19,12 +19,12 @@ class FindAndReplace
 
     /**
      * FindAndReplace constructor.
-     * @param FileHelper $fileHelper
+     * @param FileHelperInterface $fileHelper
      * @param IOHelper $ioHelper
      * @param ReadOnlyFileInterface $originalComposerConfig
      */
     public function __construct(
-        FileHelper $fileHelper,
+        FileHelperInterface $fileHelper,
         IOHelper $ioHelper,
         ReadOnlyFileInterface $originalComposerConfig
     ) {
@@ -35,21 +35,16 @@ class FindAndReplace
 
     /**
      * @return void
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function __invoke()
     {
         $composer = $this->originalComposerConfig->getContents();
         
-        // Find-and-replace package-name.
-        $packageName = $this->ioHelper->getPackageName();
-        $this->fileHelper->findAndReplaceInFiles($composer['name'], $packageName);
-
-        // Find-and-replace author-name.
-        $authorName = $this->ioHelper->getAuthorName();
-        $this->fileHelper->findAndReplaceInFiles($composer['authors'][0]['name'], $authorName);
-
-        // Find-and-replace author-email.
-        $authorEmail = $this->ioHelper->getAuthorEmail();
-        $this->fileHelper->findAndReplaceInFiles($composer['authors'][0]['email'], $authorEmail);
+        $search = $composer['authors'][0]['email'];
+        $replace = $this->ioHelper->getAuthorEmail();
+        
+        $this->fileHelper->findAndReplaceInFiles($search, $replace);
     }
 }

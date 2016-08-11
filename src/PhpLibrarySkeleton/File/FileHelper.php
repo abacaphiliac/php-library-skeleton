@@ -120,6 +120,7 @@ class FileHelper implements FileHelperInterface
     /**
      * @param string $oldDirectory
      * @param string $newDirectory
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public static function replaceDirectory($oldDirectory, $newDirectory)

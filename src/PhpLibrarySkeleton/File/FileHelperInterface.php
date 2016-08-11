@@ -23,12 +23,4 @@ interface FileHelperInterface
      * @return void
      */
     public function findAndReplaceInFiles($search, $replace);
-
-    /**
-     * @param string $filename
-     * @param mixed $search
-     * @param mixed $replace
-     * @return int
-     */
-    public static function findAndReplaceInFile($filename, $search, $replace);
 }

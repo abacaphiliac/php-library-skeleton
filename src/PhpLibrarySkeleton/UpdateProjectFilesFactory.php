@@ -7,7 +7,9 @@ use PhpLibrarySkeleton\Composer\IO\IOHelper;
 use PhpLibrarySkeleton\File\FileHelper;
 use PhpLibrarySkeleton\File\JsonFile;
 use PhpLibrarySkeleton\File\YmlFile;
-use PhpLibrarySkeleton\FindAndReplace\FindAndReplace;
+use PhpLibrarySkeleton\FindAndReplace\FindAndReplaceAuthorEmail;
+use PhpLibrarySkeleton\FindAndReplace\FindAndReplaceAuthorName;
+use PhpLibrarySkeleton\FindAndReplace\FindAndReplacePackageName;
 use PhpLibrarySkeleton\UpdateComposerConfig;
 use PhpLibrarySkeleton\UpdateDirectory\ReplaceSourceDirectory;
 use PhpLibrarySkeleton\UpdateDirectory\ReplaceTestDirectory;
@@ -63,7 +65,9 @@ class UpdateProjectFilesFactory
         $callables = array(
             new UpdateFile($travisConfig, $travisUpdates),
             new UpdateFile($composerConfig, $composerUpdates),
-            new FindAndReplace($fileHelper, $ioHelper, $readOnlyComposerConfig),
+            new FindAndReplacePackageName($fileHelper, $ioHelper, $readOnlyComposerConfig),
+            new FindAndReplaceAuthorName($fileHelper, $ioHelper, $readOnlyComposerConfig),
+            new FindAndReplaceAuthorEmail($fileHelper, $ioHelper, $readOnlyComposerConfig),
             new ReplaceTestDirectory($ioHelper, $root),
             new ReplaceSourceDirectory($ioHelper, $root),
         );
