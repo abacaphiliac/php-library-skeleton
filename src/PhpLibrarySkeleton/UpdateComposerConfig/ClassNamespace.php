@@ -18,7 +18,8 @@ class ClassNamespace extends AbstractFileIO
 
         $contents['autoload'] = array(
             'psr-4' => array(
-                $namespace . '\\' => 'src/' . str_replace(array('\\', '//'), array('/', '/'), $namespace),
+                str_replace('\\', '\\\\', $namespace) . '\\\\' =>
+                    'src/' . str_replace(array('\\', '//'), array('/', '/'), $namespace),
             ),
         );
 

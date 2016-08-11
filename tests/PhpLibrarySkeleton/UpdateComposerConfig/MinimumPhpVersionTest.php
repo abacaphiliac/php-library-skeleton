@@ -47,7 +47,7 @@ class MinimumPhpVersionTest extends \PHPUnit_Framework_TestCase
         
         $this->file->method('setContents')->with(self::callback(function(array $actual) {
             $expected = array(
-                'requires' => array(
+                'require' => array(
                     'php' => '>=5.6',
                 ),
             );

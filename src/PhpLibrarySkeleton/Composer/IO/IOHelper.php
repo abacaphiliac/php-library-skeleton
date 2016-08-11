@@ -123,7 +123,12 @@ class IOHelper
     public function getClassNamespace()
     {
         if ($this->classNamespace === null) {
-            $this->classNamespace = $this->askUntilTruthy('Class namespace: ');
+            $classNamespace = $this->askUntilTruthy('Class namespace: ');
+            
+            // Turn Foo\\Bar into Foo\Bar:
+            $classNamespace = str_replace('\\\\', '\\', $classNamespace);
+            
+            $this->classNamespace = $classNamespace;
         }
         
         return $this->classNamespace;
@@ -136,8 +141,9 @@ class IOHelper
     public function getClassDirectory()
     {
         $classNamespace = $this->getClassNamespace();
-        
-        return str_replace(array('\\', '//'), array('/', '/'), $classNamespace);
+
+        // Turn Foo\Bar into Foo/Bar:
+        return str_replace('\\', '/', $classNamespace);
     }
 
     /**

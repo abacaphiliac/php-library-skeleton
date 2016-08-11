@@ -68,7 +68,12 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
         
         $this->sut->writeFile();
         
-        self::assertStringEqualsFile($this->file->url(), '{"Foo":"Bar"}');
+        self::assertStringEqualsFile($this->file->url(), <<<'JSON'
+{
+    "Foo": "Bar"
+}
+JSON
+);
     }
 
     /**

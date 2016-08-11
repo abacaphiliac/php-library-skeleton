@@ -14,7 +14,7 @@ class MinimumPhpVersion extends AbstractFileIO
     {
         $contents = $this->getFile()->getContents();
 
-        $contents['requires']['php'] = '>=' . $this->getIoHelper()->getMinimumPhpVersion();
+        $contents['require']['php'] = '>=' . $this->getIoHelper()->getMinimumPhpVersion();
 
         $this->getFile()->setContents($contents);
     }

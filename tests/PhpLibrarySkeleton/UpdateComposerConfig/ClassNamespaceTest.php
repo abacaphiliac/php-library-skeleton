@@ -51,7 +51,7 @@ class ClassNamespaceTest extends \PHPUnit_Framework_TestCase
             $expected = array(
                 'autoload' => array(
                     'psr-4' => array(
-                        'Fizz\\Buzz\\' => 'src/Fizz/Buzz',
+                        'Fizz\\\\Buzz\\\\' => 'src/Fizz/Buzz',
                     ),
                 ),
             );

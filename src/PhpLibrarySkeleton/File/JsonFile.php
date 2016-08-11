@@ -2,6 +2,7 @@
 
 namespace PhpLibrarySkeleton\File;
 
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -22,7 +23,7 @@ class JsonFile extends AbstractFile
         parent::__construct($file);
         
         $normalizers = array(new ObjectNormalizer());
-        $encoders = array(new JsonEncoder());
+        $encoders = array(new JsonEncoder(new JsonEncode(JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)));
 
         $this->serializer = new Serializer($normalizers, $encoders);
     }
@@ -44,6 +45,6 @@ class JsonFile extends AbstractFile
      */
     protected function encode(array $data)
     {
-        return str_replace('\/', '/', $this->serializer->encode($data, JsonEncoder::FORMAT));
+        return $this->serializer->encode($data, JsonEncoder::FORMAT);
     }
 }
