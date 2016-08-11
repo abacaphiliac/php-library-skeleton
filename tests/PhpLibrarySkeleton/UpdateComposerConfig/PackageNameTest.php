@@ -43,7 +43,7 @@ class PackageNameTest extends \PHPUnit_Framework_TestCase
         
         $this->ioHelper->method('getPackageName')->willReturn('fizz/buzz');
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             $expected = array(
                 'name' => 'fizz/buzz',
             );

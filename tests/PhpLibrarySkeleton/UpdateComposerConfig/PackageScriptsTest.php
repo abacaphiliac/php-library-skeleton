@@ -44,7 +44,7 @@ class PackageScriptsTest extends \PHPUnit_Framework_TestCase
             ),
         ));
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             \PHPUnit_Framework_TestCase::assertArrayNotHasKey('post-create-project-cmd', $actual['scripts']);
             
             return true;
@@ -61,7 +61,7 @@ class PackageScriptsTest extends \PHPUnit_Framework_TestCase
             ),
         ));
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             \PHPUnit_Framework_TestCase::assertArrayNotHasKey('scripts', $actual);
             
             return true;

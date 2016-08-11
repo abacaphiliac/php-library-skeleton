@@ -106,8 +106,8 @@ class FileHelper implements FileHelperInterface
             \RecursiveIteratorIterator::CHILD_FIRST
         );
         
-        foreach($files as $file) {
-            if ($file->isDir()){
+        foreach ($files as $file) {
+            if ($file->isDir()) {
                 @rmdir($file->getPathname());
             } else {
                 @unlink($file->getPathname());

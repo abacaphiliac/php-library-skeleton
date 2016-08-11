@@ -49,7 +49,7 @@ class MinimumPhpVersionTest extends \PHPUnit_Framework_TestCase
         
         $this->ioHelper->method('getMinimumPhpVersion')->willReturn('5.6');
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             \PHPUnit_Framework_TestCase::assertArrayHasKey('php', $actual);
             \PHPUnit_Framework_TestCase::assertNotContains('5.3', $actual['php']);
             \PHPUnit_Framework_TestCase::assertNotContains('5.4', $actual['php']);

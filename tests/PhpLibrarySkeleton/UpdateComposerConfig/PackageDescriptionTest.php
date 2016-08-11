@@ -43,7 +43,7 @@ class PackageDescriptionTest extends \PHPUnit_Framework_TestCase
         
         $this->ioHelper->method('getPackageDescription')->willReturn('Fizz is buzz.');
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             $expected = array(
                 'description' => 'Fizz is buzz.',
             );

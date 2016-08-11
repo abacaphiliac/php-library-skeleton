@@ -46,7 +46,7 @@ class PackageKeywordsTest extends \PHPUnit_Framework_TestCase
         
         $this->ioHelper->method('getPackageKeywords')->willReturn('Fizz, Buzz,');
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             \PHPUnit_Framework_TestCase::assertArrayHasKey('keywords', $actual);
             \PHPUnit_Framework_TestCase::assertContains('Fizz', $actual['keywords']);
             \PHPUnit_Framework_TestCase::assertContains('Fizz', $actual['keywords']);

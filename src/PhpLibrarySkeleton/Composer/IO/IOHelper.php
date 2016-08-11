@@ -6,10 +6,10 @@ use Composer\IO\IOInterface;
 
 class IOHelper
 {
-    CONST DEFAULT_LICENSE = 'MIT';
-    CONST DEFAULT_MINIMUM_PHP_VERSION = '5.6';
-    CONST DEFAULT_MINIMUM_STABILITY = 'stable';
-    CONST DEFAULT_PACKAGE_TYPE = 'library';
+    const DEFAULT_LICENSE = 'MIT';
+    const DEFAULT_MINIMUM_PHP_VERSION = '5.6';
+    const DEFAULT_MINIMUM_STABILITY = 'stable';
+    const DEFAULT_PACKAGE_TYPE = 'library';
     
     /**
      * @var IOInterface

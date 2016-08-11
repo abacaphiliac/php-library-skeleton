@@ -73,7 +73,7 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
     "Foo": "Bar"
 }
 JSON
-);
+        );
     }
 
     /**

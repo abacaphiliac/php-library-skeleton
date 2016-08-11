@@ -43,7 +43,7 @@ class MinimumStabilityTest extends \PHPUnit_Framework_TestCase
         
         $this->ioHelper->method('getPackageMinimumStability')->willReturn('stable');
         
-        $this->file->method('setContents')->with(self::callback(function(array $actual) {
+        $this->file->method('setContents')->with(self::callback(function (array $actual) {
             $expected = array(
                 'minimum-stability' => 'stable',
             );

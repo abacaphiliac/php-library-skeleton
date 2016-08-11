@@ -71,7 +71,8 @@ class UpdateProjectFilesFactory
             new FindAndReplaceAuthorEmail($fileHelper, $ioHelper, $readOnlyComposerConfig),
             new ReplaceTestDirectory($ioHelper, $root),
             new ReplaceSourceDirectory($ioHelper, $root),
-            new RemoveFile(new \SplFileInfo($root->getPathname() . '/composer.lock'))
+            new RemoveFile(new \SplFileInfo($root->getPathname() . '/composer.lock')),
+            new RemoveFile(new \SplFileInfo($root->getPathname() . '/LICENSE'))
         );
 
         return new UpdateProjectFiles($callables);
