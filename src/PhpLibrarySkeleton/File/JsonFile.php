@@ -44,6 +44,6 @@ class JsonFile extends AbstractFile
      */
     protected function encode(array $data)
     {
-        return $this->serializer->encode($data, JsonEncoder::FORMAT);
+        return stripslashes($this->serializer->encode($data, JsonEncoder::FORMAT));
     }
 }
