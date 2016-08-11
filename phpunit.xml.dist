@@ -3,6 +3,9 @@
          beStrictAboutOutputDuringTests="true"
          disallowChangesToGlobalState="true"
          verbose="true">
+    <php>
+        <ini name="display_errors" value="On" />
+    </php>
     <testsuites>
         <testsuite name="abacaphiliac/php-library-skeleton">
             <directory>./tests</directory>
