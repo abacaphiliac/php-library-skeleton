@@ -32,6 +32,8 @@ class UpdateProjectFilesFactoryTest extends \PHPUnit_Framework_TestCase
         $composerConfig = vfsStream::newFile('composer.json');
         $this->root->addChild($composerConfig);
         
+        file_put_contents($composerConfig->url(), '{}');
+        
         $travisConfig = vfsStream::newFile('.travis.yml');
         $this->root->addChild($travisConfig);
      
