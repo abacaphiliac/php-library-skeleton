@@ -1,0 +1,5 @@
+pre-commit:
+    enabled: true
+    execute: { phpunit: true, phplint: true, php-cs-fixer: false, phpcs: true, phpmd: false }
+commit-msg:
+    enabled: false

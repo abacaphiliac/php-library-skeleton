@@ -13,6 +13,7 @@
     "php": "^7.0|^5.6"
   },
   "require-dev" : {
+    "bruli/php-git-hooks": "*",
     "humbug/humbug": "1.0.x-dev",
     "jakub-onderka/php-parallel-lint": "*",
     "johnkary/phpunit-speedtrap": "*",
@@ -20,10 +21,20 @@
     "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "*"
   },
+  "suggest": {
+    "beberlei/assert": "Thin assertion library for input validation in business models.",
+    "monolog/monolog": "Sends your logs to files, sockets, inboxes, databases and various web services."
+  },
   "scripts": {
+    "hooks:pre-commit:configure": "PhpGitHooks\\Application\\Composer\\ConfiguratorScript::buildConfig",
+    "hooks:pre-commit:install": "if [ -d '.git/hooks' ]; then cp vendor/bruli/php-git-hooks/hooks/pre-commit .git/hooks/ ; fi",
+    "hooks:pre-commit:run": ".git/hooks/pre-commit",
     "lint:beautify": "vendor/bin/phpcbf --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
     "lint:style": "vendor/bin/phpcs --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
     "lint:syntax": "vendor/bin/parallel-lint src/ tests/",
+    "post-create-project-cmd": "composer copy:pre-commit",
+    "post-install-cmd": "composer copy:pre-commit",
+    "post-update-cmd": "composer copy:pre-commit",
     "test:mutations": "vendor/bin/humbug",
     "test:units": "vendor/bin/phpunit --coverage-text"
   }
