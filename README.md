@@ -8,7 +8,7 @@ An opinionated PHP library skeleton.
 
 ## Installation
 ```bash
-composer create-project abacaphiliac/php-library-skeleton your-php-library
+composer create-project abacaphiliac/php-library-skeleton your-php-library --repository-url=https://github.com/abacaphiliac/php-library-skeleton
 ```
 
 ## Usage
