@@ -20,6 +20,10 @@
     "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "*"
   },
+  "suggest": {
+    "beberlei/assert": "Thin assertion library for input validation in business models.",
+    "monolog/monolog": "Sends your logs to files, sockets, inboxes, databases and various web services."
+  },
   "scripts": {
     "lint:beautify": "vendor/bin/phpcbf --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
     "lint:style": "vendor/bin/phpcs --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
