@@ -1,0 +1,17 @@
+language: php
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+env:
+  - COMPOSER_COMMAND="install --no-interaction"
+  - COMPOSER_COMMAND="update --no-interaction"
+  - COMPOSER_COMMAND="update --no-interaction --prefer-lowest"
+before_script:
+  - composer self-update
+  - composer $COMPOSER_COMMAND
+script:
+  - composer lint:syntax
+  - composer lint:style
+  - composer test:units
+  - composer test:mutations

@@ -1,0 +1,30 @@
+{
+  "name": "abacaphiliac/php-library-skeleton",
+  "description": "An opinionated PHP library skeleton.",
+  "minimum-stability": "stable",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Abacaphiliac\\PhpLibrarySkeleton\\": "src/PhpLibrarySkeleton"
+    }
+  },
+  "require" : {
+    "php": "^7.0|^5.6"
+  },
+  "require-dev" : {
+    "humbug/humbug": "1.0.x-dev",
+    "jakub-onderka/php-parallel-lint": "*",
+    "johnkary/phpunit-speedtrap": "*",
+    "klever/tutor": "v0.1.0-alpha",
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "*"
+  },
+  "scripts": {
+    "lint:beautify": "vendor/bin/phpcbf --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
+    "lint:style": "vendor/bin/phpcs --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
+    "lint:syntax": "vendor/bin/parallel-lint src/ tests/",
+    "test:mutations": "vendor/bin/humbug",
+    "test:units": "vendor/bin/phpunit --coverage-text"
+  }
+}
