@@ -25,6 +25,7 @@
     "monolog/monolog": "Sends your logs to files, sockets, inboxes, databases and various web services."
   },
   "scripts": {
+    "build": "composer lint:syntax && composer lint:style && composer test:units && composer test:mutations",
     "lint:beautify": "vendor/bin/phpcbf --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
     "lint:style": "vendor/bin/phpcs --standard=PSR2 --extensions=php --severity=1 src/ tests/ -v",
     "lint:syntax": "vendor/bin/parallel-lint src/ tests/",
